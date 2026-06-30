@@ -12,14 +12,12 @@ body {
     font-family: serif;
 }
 
-/* STAGE */
 #book-stage {
     position: relative;
     width: 100vw;
     height: 100vh;
 }
 
-/* PAGE AREAS */
 .page {
     position: absolute;
     top: 16%;
@@ -30,21 +28,18 @@ body {
     color: white;
 }
 
-/* LEFT */
 #pageA {
     width: 21%;
     left: 28%;
     background: rgba(255,255,255,0.05);
 }
 
-/* RIGHT */
 #pageB {
     width: 19%;
     right: 30%;
     background: rgba(255,255,255,0.05);
 }
 
-/* NAV */
 .nav-btn {
     position: absolute;
     top: 50%;
@@ -74,30 +69,28 @@ body {
 
 </div>
 
+<!-- ✔️ CRITICAL FIX: LOAD ORDER CONTROL -->
+<script src="book/loader.js"></script>
+<script src="book/paginator.js"></script>
+<script src="book/renderer.js"></script>
+<script src="book/engine.js"></script>
+
 <script>
 /*
-=========================
- INLINE ENGINE TEST
-=========================
+BOOT STRAP CHECK
+This forces a safe entry point after all scripts load
 */
 
-window.onload = function () {
-    console.log("INLINE ENGINE RUNNING");
+window.addEventListener("load", () => {
+    console.log("BOOT STRAP TRIGGERED");
 
-    document.getElementById("pageA").innerHTML =
-        "<h2>ENGINE WORKS A</h2><p>If you see this, JS is working.</p>";
-
-    document.getElementById("pageB").innerHTML =
-        "<h2>ENGINE WORKS B</h2><p>DOM injection confirmed.</p>";
-
-    document.getElementById("btnNext").onclick = function () {
-        alert("NEXT CLICKED");
-    };
-
-    document.getElementById("btnPrev").onclick = function () {
-        alert("PREV CLICKED");
-    };
-};
+    if (typeof initBookEngine === "function") {
+        console.log("ENGINE FOUND → STARTING");
+        initBookEngine();
+    } else {
+        console.log("ENGINE NOT FOUND");
+    }
+});
 </script>
 
 </body>
