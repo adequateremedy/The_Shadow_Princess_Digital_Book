@@ -1,79 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>The Shadow Princess</title>
+console.log("ENGINE FILE IS BEING READ");
 
-<style>
-body {
-    margin: 0;
-    overflow: hidden;
-    background: #444;
-    font-family: serif;
+function initBookEngine() {
+    console.log("ENGINE INIT STARTED");
+
+    const pageA = document.getElementById("pageA");
+    const pageB = document.getElementById("pageB");
+
+    pageA.innerHTML = "ENGINE IS NOW CONTROLLING PAGE A";
+    pageB.innerHTML = "ENGINE IS NOW CONTROLLING PAGE B";
 }
 
-#book-stage {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-}
-
-.page {
-    position: absolute;
-    top: 16%;
-    height: 70%;
-    box-sizing: border-box;
-    overflow: hidden;
-    padding: 14px;
-    color: white;
-}
-
-#pageA {
-    width: 21%;
-    left: 28%;
-    background: rgba(255,255,255,0.05);
-}
-
-#pageB {
-    width: 19%;
-    right: 30%;
-    background: rgba(255,255,255,0.05);
-}
-
-.nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 40px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    z-index: 9999;
-}
-
-#btnPrev { left: 20px; }
-#btnNext { right: 20px; }
-</style>
-</head>
-
-<body>
-
-<div id="book-stage">
-
-    <button id="btnPrev" class="nav-btn">◀</button>
-    <button id="btnNext" class="nav-btn">▶</button>
-
-    <div id="pageA" class="page"></div>
-    <div id="pageB" class="page"></div>
-
-</div>
-
-<!-- ONLY REAL ENGINE FILES -->
-<script src="book/loader.js"></script>
-<script src="book/paginator.js"></script>
-<script src="book/renderer.js"></script>
-<script src="book/engine.js"></script>
-
-</body>
-</html>
+window.addEventListener("load", initBookEngine);
