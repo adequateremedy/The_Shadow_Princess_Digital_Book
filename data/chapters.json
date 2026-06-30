@@ -1,1 +1,8 @@
-.
+[
+  {
+    "id": 1,
+    "number": "Chapter One",
+    "title": "The Shadows",
+    "textFile": "chapter-1.txt"
+  }
+]
