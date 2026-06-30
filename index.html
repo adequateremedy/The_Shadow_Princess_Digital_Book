@@ -24,10 +24,7 @@ body {
     height: 100vh;
 }
 
-/* =========================
-   STATIC PAGE FRAME
-   (this is your "Next Page.png")
-========================= */
+/* STATIC PAGE FRAME */
 #book-page {
     position: absolute;
     width: 100%;
@@ -36,10 +33,8 @@ body {
 }
 
 /* =========================
-   PAGE ZONES (LOCKED LAYOUT)
+   PAGE ZONES
 ========================= */
-
-/* COMMON PAGE SETTINGS */
 .page {
     position: absolute;
     top: 16%;
@@ -49,13 +44,13 @@ body {
     padding: 10px;
 }
 
-/* LEFT PAGE (SIDE A) */
+/* LEFT */
 #pageA {
     width: 21%;
     left: 28%;
 }
 
-/* RIGHT PAGE (SIDE B) */
+/* RIGHT */
 #pageB {
     width: 19%;
     right: 30%;
@@ -64,8 +59,6 @@ body {
 /* =========================
    TYPOGRAPHY
 ========================= */
-
-/* Chapter Number (LEFT ONLY) */
 .chapter-number {
     font-size: 20px;
     font-weight: bold;
@@ -73,7 +66,6 @@ body {
     display: block;
 }
 
-/* Chapter Title (LEFT ONLY) */
 .chapter-title {
     font-size: 15px;
     font-weight: bold;
@@ -81,22 +73,11 @@ body {
     display: block;
 }
 
-/* Body Text (BOTH PAGES) */
 .chapter-text {
     font-size: 12px;
     line-height: 1.6;
     text-align: left;
     white-space: normal;
-}
-
-/* =========================
-   IMAGE MODE (FULL REPLACE)
-========================= */
-.page-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
 }
 </style>
 </head>
@@ -105,43 +86,22 @@ body {
 
 <div id="book-stage">
 
-    <!-- STATIC BOOK FRAME -->
+    <!-- STATIC IMAGE FRAME -->
     <img id="book-page" src="images/Next Page.png" alt="Book Page">
 
-    <!-- LEFT PAGE (SIDE A) -->
-    <div id="pageA" class="page">
-
-        <div class="chapter-number">Chapter 1</div>
-        <div class="chapter-title">The Shadows</div>
-
-        <div class="chapter-text">
-            Left page text goes here.
-        </div>
-
-        <!-- IMAGE MODE EXAMPLE (hidden until used later)
-        <img class="page-image" src="" />
-        -->
-
-    </div>
-
-    <!-- RIGHT PAGE (SIDE B) -->
-    <div id="pageB" class="page">
-
-        <!-- NO CHAPTER HEADER HERE BY DESIGN -->
-
-        <div class="chapter-text">
-            Right page continuation text goes here.
-        </div>
-
-        <!-- IMAGE MODE EXAMPLE (hidden until used later)
-        <img class="page-image" src="" />
-        -->
-
-    </div>
+    <!-- PAGES -->
+    <div id="pageA" class="page"></div>
+    <div id="pageB" class="page"></div>
 
 </div>
 
-</body>
-</html>
+<!-- =========================
+     ENGINE LOAD (FULLY INCLUDED)
+========================= -->
+<script src="book/loader.js"></script>
+<script src="book/paginator.js"></script>
+<script src="book/renderer.js"></script>
+<script src="book/engine.js"></script>
+
 </body>
 </html>
