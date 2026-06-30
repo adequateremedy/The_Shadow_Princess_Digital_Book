@@ -7,86 +7,69 @@ function paginateChapter(chapter) {
 
     const styles = window.getComputedStyle(pageA);
 
-    const measure = document.createElement("div");
+    const measureBox = document.createElement("div");
 
-    measure.style.position = "absolute";
-    measure.style.visibility = "hidden";
-    measure.style.pointerEvents = "none";
-    measure.style.left = "-99999px";
+    measureBox.style.position = "absolute";
+    measureBox.style.visibility = "hidden";
+    measureBox.style.left = "-99999px";
 
-    measure.style.fontFamily = styles.fontFamily;
-    measure.style.fontSize = styles.fontSize;
-    measure.style.fontWeight = styles.fontWeight;
-    measure.style.lineHeight = styles.lineHeight;
-    measure.style.whiteSpace = "pre-wrap";
-    measure.style.wordWrap = "break-word";
-    measure.style.boxSizing = "border-box";
-    measure.style.padding = styles.padding;
+    measureBox.style.fontFamily = styles.fontFamily;
+    measureBox.style.fontSize = styles.fontSize;
+    measureBox.style.fontWeight = styles.fontWeight;
+    measureBox.style.lineHeight = styles.lineHeight;
+    measureBox.style.whiteSpace = "pre-wrap";
+    measureBox.style.wordWrap = "break-word";
 
-    document.body.appendChild(measure);
+    document.body.appendChild(measureBox);
 
     const words = chapter.text.split(/\s+/);
 
-    let wordIndex = 0;
-
+    let index = 0;
     const spreads = [];
 
-    function fillContainer(container) {
+    function fillPage(container) {
 
-        measure.style.width = container.clientWidth + "px";
+        measureBox.style.width = container.clientWidth + "px";
 
         const maxHeight = container.clientHeight;
 
         let text = "";
 
-        while (wordIndex < words.length) {
+        while (index < words.length) {
 
-            const candidate = text.length === 0
-                ? words[wordIndex]
-                : text + " " + words[wordIndex];
+            const next = text ? text + " " + words[index] : words[index];
 
-            measure.innerText = candidate;
+            measureBox.textContent = next;
 
-            if (measure.scrollHeight > maxHeight) {
-
+            if (measureBox.scrollHeight > maxHeight) {
                 break;
-
             }
 
-            text = candidate;
-
-            wordIndex++;
-
+            text = next;
+            index++;
         }
 
         return text.trim();
-
     }
 
-    while (wordIndex < words.length) {
+    while (index < words.length) {
 
-        const leftText = fillContainer(pageA);
-
-        const rightText = fillContainer(pageB);
+        const left = fillPage(pageA);
+        const right = fillPage(pageB);
 
         spreads.push({
-
             chapterNumber: chapter.chapterNumber,
-
             chapterTitle: chapter.chapterTitle,
 
+            // ONLY TRUE FOR FIRST SPREAD
             chapterStart: spreads.length === 0,
 
-            left: leftText,
-
-            right: rightText
-
+            left,
+            right
         });
-
     }
 
-    document.body.removeChild(measure);
+    document.body.removeChild(measureBox);
 
     return spreads;
-
 }
