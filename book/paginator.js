@@ -12,13 +12,18 @@ function paginateChapter(chapter) {
     measureBox.style.position = "absolute";
     measureBox.style.visibility = "hidden";
     measureBox.style.left = "-99999px";
+    measureBox.style.top = "0";
+
+    measureBox.style.width = pageA.clientWidth + "px";
 
     measureBox.style.fontFamily = styles.fontFamily;
     measureBox.style.fontSize = styles.fontSize;
     measureBox.style.fontWeight = styles.fontWeight;
     measureBox.style.lineHeight = styles.lineHeight;
+
     measureBox.style.whiteSpace = "pre-wrap";
-    measureBox.style.wordWrap = "break-word";
+    measureBox.style.wordBreak = "break-word";
+    measureBox.style.boxSizing = "border-box";
 
     document.body.appendChild(measureBox);
 
@@ -27,9 +32,10 @@ function paginateChapter(chapter) {
     let index = 0;
     const spreads = [];
 
+    /**
+     * Fill a page until it overflows
+     */
     function fillPage(container) {
-
-        measureBox.style.width = container.clientWidth + "px";
 
         const maxHeight = container.clientHeight;
 
@@ -52,21 +58,24 @@ function paginateChapter(chapter) {
         return text.trim();
     }
 
+    /**
+     * BUILD SPREADS (LEFT + RIGHT)
+     */
     while (index < words.length) {
 
-        const left = fillPage(pageA);
-        const right = fillPage(pageB);
+        const leftText = fillPage(pageA);
+        const rightText = fillPage(pageB);
 
         spreads.push({
             chapterNumber: chapter.chapterNumber,
             chapterTitle: chapter.chapterTitle,
 
-            // ONLY TRUE FOR FIRST SPREAD
             chapterStart: spreads.length === 0,
 
-            left,
-            right
+            left: leftText,
+            right: rightText
         });
+
     }
 
     document.body.removeChild(measureBox);
