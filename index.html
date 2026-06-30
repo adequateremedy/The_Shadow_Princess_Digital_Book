@@ -69,29 +69,11 @@ body {
 
 </div>
 
-<!-- ✔️ CRITICAL FIX: LOAD ORDER CONTROL -->
+<!-- ONLY REAL ENGINE FILES -->
 <script src="book/loader.js"></script>
 <script src="book/paginator.js"></script>
 <script src="book/renderer.js"></script>
 <script src="book/engine.js"></script>
-
-<script>
-/*
-BOOT STRAP CHECK
-This forces a safe entry point after all scripts load
-*/
-
-window.addEventListener("load", () => {
-    console.log("BOOT STRAP TRIGGERED");
-
-    if (typeof initBookEngine === "function") {
-        console.log("ENGINE FOUND → STARTING");
-        initBookEngine();
-    } else {
-        console.log("ENGINE NOT FOUND");
-    }
-});
-</script>
 
 </body>
 </html>
