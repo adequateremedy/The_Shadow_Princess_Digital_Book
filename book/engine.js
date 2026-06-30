@@ -1,26 +1,23 @@
 console.log("ENGINE FILE LOADED");
 
-const currentChapter = 1;
+window.addEventListener("load", () => {
+    console.log("ENGINE START TRIGGERED");
+    loadChapter(1);
+});
 
 function loadChapter(chapterNumber) {
     const path = `chapters/chapter-${chapterNumber}.txt`;
 
-    console.log("LOADING:", path);
-
     fetch(path)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to load chapter file");
-            }
-            return response.text();
+        .then(res => {
+            if (!res.ok) throw new Error("Chapter not found");
+            return res.text();
         })
         .then(text => {
             renderChapter(chapterNumber, text);
         })
         .catch(err => {
             console.error(err);
-
-            renderChapter(chapterNumber, "ERROR LOADING CHAPTER");
         });
 }
 
@@ -28,25 +25,25 @@ function renderChapter(chapterNumber, text) {
     const pageA = document.getElementById("pageA");
     const pageB = document.getElementById("pageB");
 
-    const title = `The Shadows`;
-    const number = `Chapter ${chapterNumber}`;
-
     pageA.innerHTML = `
-        <div class="chapter-number">${number}</div>
-        <div class="chapter-title">${title}</div>
-        <div class="chapter-text">
-            ${text}
-        </div>
+        <div class="chapter-number">Chapter ${chapterNumber}</div>
+        <div class="chapter-title">The Shadows</div>
+        <div id="pageAtext" class="chapter-text"></div>
     `;
 
     pageB.innerHTML = `
-        <div class="chapter-text">
-            Page 2 placeholder (pagination comes next)
-        </div>
+        <div id="pageBtext" class="chapter-text"></div>
     `;
+
+    paginateAndRender(text);
 }
 
-window.addEventListener("load", () => {
-    console.log("ENGINE START TRIGGERED");
-    loadChapter(currentChapter);
-});
+function paginateAndRender(text) {
+    const maxChars = 900;
+
+    const first = text.slice(0, maxChars);
+    const second = text.slice(maxChars);
+
+    document.getElementById("pageAtext").innerText = first;
+    document.getElementById("pageBtext").innerText = second;
+}
