@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <title>The Shadow Princess</title>
 
+<!-- CACHE BUSTING (FORCES FRESH LOAD EVERY TIME) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <style>
-/* =========================
-   GLOBAL
-========================= */
 body {
     margin: 0;
     overflow: hidden;
@@ -15,16 +17,12 @@ body {
     font-family: serif;
 }
 
-/* =========================
-   BOOK STAGE
-========================= */
 #book-stage {
     position: relative;
     width: 100vw;
     height: 100vh;
 }
 
-/* STATIC PAGE FRAME */
 #book-page {
     position: absolute;
     width: 100%;
@@ -32,9 +30,6 @@ body {
     object-fit: contain;
 }
 
-/* =========================
-   PAGE ZONES
-========================= */
 .page {
     position: absolute;
     top: 16%;
@@ -44,21 +39,16 @@ body {
     padding: 10px;
 }
 
-/* LEFT */
 #pageA {
     width: 21%;
     left: 28%;
 }
 
-/* RIGHT */
 #pageB {
     width: 19%;
     right: 30%;
 }
 
-/* =========================
-   TYPOGRAPHY
-========================= */
 .chapter-number {
     font-size: 20px;
     font-weight: bold;
@@ -77,7 +67,6 @@ body {
     font-size: 12px;
     line-height: 1.6;
     text-align: left;
-    white-space: normal;
 }
 </style>
 </head>
@@ -86,18 +75,13 @@ body {
 
 <div id="book-stage">
 
-    <!-- STATIC IMAGE FRAME -->
     <img id="book-page" src="images/Next Page.png" alt="Book Page">
 
-    <!-- PAGES -->
     <div id="pageA" class="page"></div>
     <div id="pageB" class="page"></div>
 
 </div>
 
-<!-- =========================
-     ENGINE LOAD (FULLY INCLUDED)
-========================= -->
 <script src="book/loader.js"></script>
 <script src="book/paginator.js"></script>
 <script src="book/renderer.js"></script>
