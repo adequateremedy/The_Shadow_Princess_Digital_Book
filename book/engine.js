@@ -4,15 +4,7 @@ const chapters = {
     1: {
         number: "Chapter 1",
         title: "The Shadows",
-        text: `This is your REAL chapter container.
-
-Right now we are preparing the system that will:
-- split text across pages
-- flow left → right
-- prevent overflow breaking words
-- support full Chapter 1–13 integration
-
-For now this is controlled text that proves the engine is live.`
+        text: ""
     }
 };
 
@@ -27,14 +19,12 @@ window.addEventListener("load", () => {
     pageA.innerHTML = `
         <div class="chapter-number">${chapter.number}</div>
         <div class="chapter-title">${chapter.title}</div>
-        <div class="chapter-text" id="chapterTextA">
-            ${chapter.text}
-        </div>
+        <div class="chapter-text" id="chapterTextA"></div>
     `;
 
     pageB.innerHTML = `
         <div class="chapter-text" id="chapterTextB">
-            Continuation system will be built next (pagination engine)
+            Waiting for real chapter loader connection...
         </div>
     `;
 });
