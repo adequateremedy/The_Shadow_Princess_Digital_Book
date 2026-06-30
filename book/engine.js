@@ -7,7 +7,10 @@ window.addEventListener("load", () => {
 
 function loadChapter(chapterNumber) {
     fetch(`chapters/chapter-${chapterNumber}.txt`)
-        .then(res => res.text())
+        .then(res => {
+            if (!res.ok) throw new Error("Chapter not found");
+            return res.text();
+        })
         .then(text => {
 
             const chapter = {
@@ -16,18 +19,12 @@ function loadChapter(chapterNumber) {
                 text
             };
 
-            runPaginationPipeline(chapter);
-        });
-}
+            const pages = paginateChapter(chapter);
 
-function runPaginationPipeline(chapter) {
+            const left = pages.find(p => p.side === "A");
+            const right = pages.find(p => p.side === "B");
 
-    // STEP 1: paginate (your pixel system)
-    const pages = paginateChapter(chapter);
-
-    // STEP 2: render
-    const left = pages.find(p => p.side === "A") || null;
-    const right = pages.find(p => p.side === "B") || null;
-
-    renderPage(left, right);
+            renderPage(left, right);
+        })
+        .catch(err => console.error(err));
 }
