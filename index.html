@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>The Shadow Princess</title>
-
-    <!-- Loads your JS logic -->
-    <script defer src="js/main.js"></script>
-</head>
-
 <body>
 
+<div id="book-stage">
+
+    <!-- STATIC BOOK FRAME (Next Page image) -->
+    <img id="book-page" src="images/Next Page.png" alt="Open Book Page">
+
+    <!-- LEFT PAGE (future chapter body text) -->
+    <div id="page-left" class="page-zone">
+        <div id="chapter-header-left" class="chapter-header"></div>
+        <div id="chapter-text-left" class="chapter-text"></div>
+    </div>
+
+    <!-- RIGHT PAGE -->
+    <div id="page-right" class="page-zone">
+        <div id="chapter-header-right" class="chapter-header"></div>
+        <div id="chapter-text-right" class="chapter-text"></div>
+    </div>
+
+</div>
+
 </body>
-</html>
