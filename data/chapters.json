@@ -4,5 +4,77 @@
     "number": "Chapter One",
     "title": "The Shadows",
     "textFile": "chapter-1.txt"
+  },
+  {
+    "id": 2,
+    "number": "Chapter Two",
+    "title": "Above the Bakery",
+    "textFile": "chapter-2.txt"
+  },
+  {
+    "id": 3,
+    "number": "Chapter Three",
+    "title": "The First Cracks",
+    "textFile": "chapter-3.txt"
+  },
+  {
+    "id": 4,
+    "number": "Chapter Four",
+    "title": "The Shadow Between Them",
+    "textFile": "chapter-4.txt"
+  },
+  {
+    "id": 5,
+    "number": "Chapter Five",
+    "title": "The Hunter's Path",
+    "textFile": "chapter-5.txt"
+  },
+  {
+    "id": 6,
+    "number": "Chapter Six",
+    "title": "The Price of Magic",
+    "textFile": "chapter-6.txt"
+  },
+  {
+    "id": 7,
+    "number": "Chapter Seven",
+    "title": "Echoes in the Forest",
+    "textFile": "chapter-7.txt"
+  },
+  {
+    "id": 8,
+    "number": "Chapter Eight",
+    "title": "The Gathering Storm",
+    "textFile": "chapter-8.txt"
+  },
+  {
+    "id": 9,
+    "number": "Chapter Nine",
+    "title": "The Veil Grows Thin",
+    "textFile": "chapter-9.txt"
+  },
+  {
+    "id": 10,
+    "number": "Chapter Ten",
+    "title": "The Fall of Silence",
+    "textFile": "chapter-10.txt"
+  },
+  {
+    "id": 11,
+    "number": "Chapter Eleven",
+    "title": "The Bridge",
+    "textFile": "chapter-11.txt"
+  },
+  {
+    "id": 12,
+    "number": "Chapter Twelve",
+    "title": "The Shadow Princess",
+    "textFile": "chapter-12.txt"
+  },
+  {
+    "id": 13,
+    "number": "Chapter Thirteen",
+    "title": "The Beginning of the End",
+    "textFile": "chapter-13.txt"
   }
 ]
