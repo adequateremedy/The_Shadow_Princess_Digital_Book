@@ -10,11 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
         flipbookContainer.appendChild(page);
     }
 
-    // Page 1: Front Cover
+    // Page 1 (Right Side Only): Front Cover
     createPage('assets/front-cover.png');
     
-    // Page 2: Backside of Front Cover (Prevents library crash)
+    // Page 2 (Left Side): Backside of Front Cover
     createPage('assets/Backside-of-front-cover.png');
+    
+    // Page 3 (Right Side): Backside of Back Cover
+    createPage('assets/Backside-of-back-cover.png'); 
+    
+    // Page 4 (Left Side): Blank Left Side (Crash prevention)
+    createPage('assets/Blank-Left-Side.png');
 
     const pageFlip = new St.PageFlip(flipbookContainer, {
         width: 500, 
