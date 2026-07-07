@@ -1,12 +1,8 @@
 /* ==========================================
    THE SHADOW PRINCESS
-   Physical Flip Book Layout
+   SIMPLE FLIP BOOK FOUNDATION
 ========================================== */
 
-
-/* ==========================================
-   RESET
-========================================== */
 
 * {
 
@@ -37,93 +33,20 @@ body {
 
 
 /* ==========================================
-   BACKGROUND VIDEO
-========================================== */
-
-
-#background-video {
-
-    position: fixed;
-
-
-    top: 0;
-    left: 0;
-
-
-    width: 100vw;
-    height: 100vh;
-
-
-    object-fit: contain;
-
-
-    background: #000;
-
-
-    opacity: 0;
-
-
-    z-index: 0;
-
-}
-
-
-
-
-
-
-/* ==========================================
-   BOOK HOLDER
+   BOOK POSITION
 ========================================== */
 
 
 #book {
 
 
-    position: fixed;
-
-
-    top: 50%;
-    left: 50%;
-
-
-    transform:
-        translate(-50%, -50%);
+    position: absolute;
 
 
     width: 788px;
     height: 633px;
 
 
-    perspective: 1800px;
-
-
-    z-index: 10;
-
-
-}
-
-
-
-
-
-
-/* ==========================================
-   SPINE
-   ONLY THING VISIBLE AT START
-========================================== */
-
-
-#spine {
-
-
-    position: absolute;
-
-
-    width: 132px;
-    height: 446px;
-
-
     top: 50%;
     left: 50%;
 
@@ -132,13 +55,7 @@ body {
         translate(-50%, -50%);
 
 
-    cursor: pointer;
-
-
-    z-index: 50;
-
-
-    user-select: none;
+    perspective: 2000px;
 
 
 }
@@ -148,14 +65,12 @@ body {
 
 
 
-
 /* ==========================================
-   CLOSED BOOK
-   FADES IN AFTER SPINE CLICK
+   CLOSED COVER
 ========================================== */
 
 
-#closed-book {
+#cover {
 
 
     position: absolute;
@@ -169,17 +84,22 @@ body {
     left: 197px;
 
 
-    opacity: 0;
-
-
-    display: none;
+    transform-origin:
+        left center;
 
 
     transform-style:
         preserve-3d;
 
 
-    z-index: 20;
+    z-index: 10;
+
+
+    cursor: pointer;
+
+
+    transition:
+        transform 1.5s ease;
 
 
 }
@@ -189,26 +109,18 @@ body {
 
 
 
-/* ==========================================
-   FRONT COVER IMAGE
-========================================== */
-
-
-#front-cover {
-
-
-    position: absolute;
+#cover img {
 
 
     width: 394px;
     height: 633px;
 
 
-    top: 0;
-    left: 0;
+    display: block;
 
 
-    cursor: pointer;
+    backface-visibility:
+        hidden;
 
 
     user-select: none;
@@ -223,11 +135,10 @@ body {
 
 /* ==========================================
    OPEN BOOK
-   HIDDEN UNTIL COVER OPENS
 ========================================== */
 
 
-#open-book {
+#flipbook {
 
 
     position: absolute;
@@ -241,11 +152,10 @@ body {
     left: 0;
 
 
-    display: none;
+    display: flex;
 
 
-    transform-style:
-        preserve-3d;
+    z-index: 1;
 
 
 }
@@ -256,7 +166,7 @@ body {
 
 
 /* ==========================================
-   LEFT AND RIGHT PAGES
+   LEFT + RIGHT PAGES
 ========================================== */
 
 
@@ -264,33 +174,15 @@ body {
 #right-page {
 
 
-    position: absolute;
+    position: relative;
 
 
     width: 394px;
     height: 633px;
 
 
-    top: 0;
-
-
 }
 
-
-
-#left-page {
-
-    left: 0;
-
-}
-
-
-
-#right-page {
-
-    right: 0;
-
-}
 
 
 
@@ -298,19 +190,12 @@ body {
 
 
 /* ==========================================
-   INSIDE COVERS
+   INSIDE FRONT/BACK COVERS
 ========================================== */
 
 
 #inside-front-cover,
-#inside-back-cover {
-
-
-    position: absolute;
-
-
-    width: 394px;
-    height: 633px;
+#right-page {
 
 
     background:
@@ -321,53 +206,15 @@ body {
 
 
 
-#inside-front-cover {
-
-    left: 0;
-
-}
-
-
-
-
-#inside-back-cover {
-
-    right: 0;
-
-}
-
-
-
 
 
 
 /* ==========================================
-   PAGE LAYERS
+   PAGE IMAGE
 ========================================== */
 
 
-#left-pages,
-#right-pages {
-
-
-    position: absolute;
-
-
-    width: 394px;
-    height: 633px;
-
-
-    top: 0;
-
-
-}
-
-
-
-
-
-
-#table-of-contents {
+#current-page {
 
 
     width: 394px;
@@ -377,62 +224,46 @@ body {
     display: block;
 
 
-}
-
-
-
-
-
-
-
-/* ==========================================
-   HARD COVER
-   ROTATES OPEN
-========================================== */
-
-
-#hard-cover {
-
-
     position: absolute;
-
-
-    width: 394px;
-    height: 633px;
 
 
     top: 0;
     left: 0;
 
 
-    transform-origin:
-        left center;
-
-
-    transform-style:
-        preserve-3d;
-
-
-    z-index: 50;
-
-
 }
 
 
 
 
-#hard-cover img {
+
+/* ==========================================
+   PAGE SHADOW / BOOK GUTTER
+========================================== */
 
 
-    width: 394px;
+#flipbook::after {
+
+
+    content: "";
+
+
+    position: absolute;
+
+
+    top: 0;
+    left: 394px;
+
+
+    width: 12px;
     height: 633px;
 
 
-    backface-visibility:
-        hidden;
+    background:
+        rgba(0,0,0,0.35);
 
 
-    cursor: pointer;
+    pointer-events: none;
 
 
 }
