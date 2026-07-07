@@ -1,1 +1,68 @@
-.
+/* ==========================================
+   THE SHADOW PRINCESS
+   Main Book Scene Styling
+   ========================================== */
+
+
+/* Remove browser defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Full page scene */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+
+/* Main Three.js container */
+#book-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+/* Three.js canvas */
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 
+   Prevent accidental highlighting
+   while dragging pages later
+*/
+img,
+canvas {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+/*
+   Video background layer.
+   This will be controlled by JavaScript.
+*/
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: cover;
+
+    z-index: -2;
+}
