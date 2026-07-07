@@ -17,31 +17,49 @@
 <body>
 
 
-    <!-- Full Background Video -->
+    <!-- Background Bedroom Video -->
     <video
         id="background-video"
-        src="assets/background.webm"
         autoplay
         loop
         muted
         playsinline>
+
+        <source
+            src="assets/background.webm"
+            type="video/webm">
+
     </video>
 
 
 
-    <!-- Book Container -->
-    <div id="book-container">
+    <!-- Main Book -->
+    <div id="book">
 
+
+        <!-- Spine Screen -->
         <img
             id="spine"
             src="assets/spine.png"
-            alt="The Shadow Princess Spine">
+            alt="Book Spine">
 
 
+
+        <!-- Front Cover -->
         <img
             id="front-cover"
             src="assets/front-cover.png"
-            alt="The Shadow Princess Front Cover">
+            alt="Front Cover">
+
+
+
+        <!-- Inside Book Area -->
+        <div id="pages">
+
+            <!-- Pages will be created by JavaScript -->
+
+        </div>
+
 
     </div>
 
