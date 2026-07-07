@@ -1,52 +1,69 @@
 document.addEventListener('DOMContentLoaded', function() {
     const flipbookContainer = document.getElementById('flipbook');
 
-    // Array mapping chapter numbers to their exact word equivalents for folder and file names
     const chapterWords = [
         "One", "Two", "Three", "Four", "Five", "Six", "Seven", 
         "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen"
     ];
 
-    // 1. Front Cover
+    // 1. Page 1 (Right): Front Cover
     const frontCover = document.createElement('div');
     frontCover.className = 'page';
     frontCover.style.backgroundImage = "url('assets/front-cover.png')";
     flipbookContainer.appendChild(frontCover);
 
-    // 2. Inside Front Cover
+    // 2. Page 2 (Left): Backside of Front Cover
     const insideFrontCover = document.createElement('div');
-    insideFrontCover.className = 'page inside-cover';
+    insideFrontCover.className = 'page';
+    insideFrontCover.style.backgroundImage = "url('assets/Backside-of-front-cover.png')";
     flipbookContainer.appendChild(insideFrontCover);
 
-    // 3. Table of Contents
+    // 3. Page 3 (Right): Table of Contents
     const tocPage = document.createElement('div');
     tocPage.className = 'page';
     tocPage.style.backgroundImage = "url('assets/Table-of-Contents.png')";
     flipbookContainer.appendChild(tocPage);
 
-    // 4. Chapter Pages (13 chapters, 20 pages each)
+    // 4. Page 4 (Left): Blank Left Side (Back of TOC)
+    const blankTOCBack = document.createElement('div');
+    blankTOCBack.className = 'page';
+    blankTOCBack.style.backgroundImage = "url('assets/Blank-Left-Side.png')";
+    flipbookContainer.appendChild(blankTOCBack);
+
+    // Pages 5 through 264: Chapter Pages
     chapterWords.forEach(word => {
-        // Matches the new folder format: Chapter_One
         const folderName = `Chapter_${word}`;
         for (let i = 1; i <= 20; i++) {
             const page = document.createElement('div');
             page.className = 'page';
-            // Matches the new file format: Chapter-One-Page-1.png
             page.style.backgroundImage = `url('chapters/${folderName}/Chapter-${word}-Page-${i}.png')`;
             flipbookContainer.appendChild(page);
         }
     });
 
-    // 5. Inside Back Cover
+    // Page 265 (Right): Blank Right Side (Opposite Ch 13, Pg 20)
+    const blankAfterStory = document.createElement('div');
+    blankAfterStory.className = 'page';
+    blankAfterStory.style.backgroundImage = "url('assets/Blank-Right-Side.png')";
+    flipbookContainer.appendChild(blankAfterStory);
+
+    // Page 266 (Left): Backside of Back Cover
     const insideBackCover = document.createElement('div');
-    insideBackCover.className = 'page inside-cover';
+    insideBackCover.className = 'page';
+    insideBackCover.style.backgroundImage = "url('assets/Backside-of-back-cover.png')";
     flipbookContainer.appendChild(insideBackCover);
+
+    // Page 267 (Right): Blank Right Side (To allow book to fully close)
+    const finalBlankPage = document.createElement('div');
+    finalBlankPage.className = 'page';
+    finalBlankPage.style.backgroundImage = "url('assets/Blank-Right-Side.png')";
+    flipbookContainer.appendChild(finalBlankPage);
 
     // Initialize PageFlip
     const pageFlip = new St.PageFlip(flipbookContainer, {
-        width: 500, // Base page width
-        height: 750, // Base page height 
-        size: "stretch", // Allows the book to maintain aspect ratio while scaling to the screen
+        width: 500, 
+        height: 750, 
+        size: "fit", // Changed to "fit" to ensure container maintains size
         minWidth: 300,
         maxWidth: 1000,
         minHeight: 400,
