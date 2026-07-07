@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////
 // THE SHADOW PRINCESS
 // Main Book Engine
-// Stage 1 - Background + Spine + Cover Transition
+// Stage 1 - Background Video + Spine + Cover Transition
 //////////////////////////////////////////////////////////
 
 
@@ -21,9 +21,8 @@ let spineReady = false;
 let coverReady = false;
 
 
-
 // ------------------------------------------------------
-// START ENGINE
+// INITIALIZE
 // ------------------------------------------------------
 
 function init() {
@@ -33,11 +32,12 @@ function init() {
 
 
 
+    // Flat camera so the background is not tilted
     camera = new THREE.OrthographicCamera(
-        window.innerWidth / -200,
-        window.innerWidth / 200,
-        window.innerHeight / 200,
-        window.innerHeight / -200,
+        window.innerWidth / -100,
+        window.innerWidth / 100,
+        window.innerHeight / 100,
+        window.innerHeight / -100,
         0.1,
         1000
     );
@@ -51,6 +51,7 @@ function init() {
         alpha: true,
         antialias: true
     });
+
 
 
     renderer.setSize(
@@ -82,7 +83,7 @@ function init() {
 
 
 
-    createBackgroundVideo();
+    loadBackgroundVideo();
 
     loadSpine();
 
@@ -110,18 +111,14 @@ function init() {
 
 
 // ------------------------------------------------------
-// BACKGROUND VIDEO
+// BACKGROUND WEBM VIDEO
 // ------------------------------------------------------
 
-function createBackgroundVideo() {
+function loadBackgroundVideo() {
 
 
     const video =
         document.createElement("video");
-
-
-    video.id =
-        "background-video";
 
 
     video.src =
@@ -138,28 +135,65 @@ function createBackgroundVideo() {
 
 
 
-    video.setAttribute(
-        "playsinline",
-        ""
-    );
+    video.play();
 
 
 
-    document.body.insertBefore(
-        video,
-        document.body.firstChild
-    );
+    const videoTexture =
+        new THREE.VideoTexture(
+            video
+        );
+
+
+    videoTexture.minFilter =
+        THREE.LinearFilter;
+
+
+    videoTexture.magFilter =
+        THREE.LinearFilter;
 
 
 
-    video.play()
-        .catch(() => {
+    const material =
+        new THREE.MeshBasicMaterial({
 
-            console.log(
-                "Background video waiting for browser permission."
-            );
+            map: videoTexture
 
         });
+
+
+
+    /*
+        Large flat plane facing camera.
+        No rotation.
+        No perspective distortion.
+    */
+
+
+    const geometry =
+        new THREE.PlaneGeometry(
+            20,
+            12
+        );
+
+
+
+    const background =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+
+
+    background.position.z =
+        -5;
+
+
+
+    scene.add(
+        background
+    );
 
 
 }
@@ -185,24 +219,18 @@ function loadSpine() {
         function(texture) {
 
 
-
             const material =
                 new THREE.MeshBasicMaterial({
 
                     map: texture,
 
-                    transparent: true
+                    transparent: true,
+
+                    opacity: 1
 
                 });
 
 
-
-            /*
-                Original image ratio:
-                132 x 446
-
-                Scale preserved.
-            */
 
             const geometry =
                 new THREE.PlaneGeometry(
@@ -264,7 +292,6 @@ function loadFrontCover() {
         function(texture) {
 
 
-
             const material =
                 new THREE.MeshBasicMaterial({
 
@@ -297,7 +324,7 @@ function loadFrontCover() {
             coverMesh.position.set(
                 0,
                 0,
-                0.9
+                1.1
             );
 
 
@@ -320,7 +347,7 @@ function loadFrontCover() {
 
 
 // ------------------------------------------------------
-// CLICK SPINE
+// CLICK DETECTION
 // ------------------------------------------------------
 
 function handleClick(event) {
@@ -356,14 +383,14 @@ function handleClick(event) {
 
 
 
-    const hit =
+    const intersects =
         raycaster.intersectObject(
             spineMesh
         );
 
 
 
-    if (hit.length > 0) {
+    if (intersects.length > 0) {
 
         openCover();
 
@@ -375,13 +402,15 @@ function handleClick(event) {
 
 
 // ------------------------------------------------------
-// SPINE TO COVER FADE
+// SPINE TO COVER CROSSFADE
 // ------------------------------------------------------
 
 function openCover() {
 
 
-    const duration = 1200;
+    const duration =
+        1200;
+
 
     const start =
         performance.now();
@@ -411,14 +440,19 @@ function openCover() {
 
         if (progress < 1) {
 
+
             requestAnimationFrame(
                 fade
             );
 
+
         }
         else {
 
-            spineMesh.visible = false;
+
+            spineMesh.visible =
+                false;
+
 
         }
 
@@ -437,26 +471,26 @@ function openCover() {
 
 
 // ------------------------------------------------------
-// WINDOW RESIZE
+// RESIZE
 // ------------------------------------------------------
 
 function resize() {
 
 
     camera.left =
-        window.innerWidth / -200;
+        window.innerWidth / -100;
 
 
     camera.right =
-        window.innerWidth / 200;
+        window.innerWidth / 100;
 
 
     camera.top =
-        window.innerHeight / 200;
+        window.innerHeight / 100;
 
 
     camera.bottom =
-        window.innerHeight / -200;
+        window.innerHeight / -100;
 
 
 
@@ -475,7 +509,7 @@ function resize() {
 
 
 // ------------------------------------------------------
-// RENDER LOOP
+// ANIMATION LOOP
 // ------------------------------------------------------
 
 function animate() {
@@ -496,6 +530,6 @@ function animate() {
 
 
 
-// RUN
+// START
 
 init();
