@@ -2,26 +2,27 @@
    THE SHADOW PRINCESS
    Main Book Engine
 
-   Stage 1:
    Spine -> Front Cover
-
-   Stage 2:
    Front Cover -> Open Book
-   ========================================== */
+
+========================================== */
 
 
 
-const spine = document.getElementById("spine");
+const spine =
+    document.getElementById("spine");
 
-const frontCover = document.getElementById("front-cover");
 
-const coverContainer = document.getElementById("cover-container");
+const frontCover =
+    document.getElementById("front-cover");
 
-const backgroundVideo = document.getElementById("background-video");
 
-const bookInterior = document.getElementById("book-interior");
+const frontCoverContainer =
+    document.getElementById("front-cover-container");
 
-const rightPageStack = document.getElementById("right-page-stack");
+
+const backgroundVideo =
+    document.getElementById("background-video");
 
 
 
@@ -32,9 +33,8 @@ let coverOpened = false;
 
 
 
-
 // ==========================================
-// INITIAL SETTINGS
+// INITIAL STATE
 // ==========================================
 
 
@@ -43,7 +43,9 @@ backgroundVideo.style.opacity = "0";
 backgroundVideo.volume = 0;
 
 
-bookInterior.style.visibility = "hidden";
+
+frontCoverContainer.style.display =
+    "none";
 
 
 
@@ -51,7 +53,7 @@ bookInterior.style.visibility = "hidden";
 
 
 // ==========================================
-// SPINE CLICK
+// CLICK SPINE
 // ==========================================
 
 
@@ -68,7 +70,7 @@ spine.addEventListener("click", function () {
     spineOpened = true;
 
 
-    openSpine();
+    startSpineTransition();
 
 
 });
@@ -81,20 +83,22 @@ spine.addEventListener("click", function () {
 
 // ==========================================
 // SPINE -> FRONT COVER
+// 5 SECOND CROSSFADE
 // ==========================================
 
 
-function openSpine() {
+function startSpineTransition() {
 
 
     const duration = 5000;
 
 
-    frontCover.style.opacity = "0";
 
-
-    coverContainer.style.display =
+    frontCoverContainer.style.display =
         "block";
+
+
+    frontCover.style.opacity = "0";
 
 
 
@@ -104,8 +108,10 @@ function openSpine() {
 
 
 
-        const startTime =
+        const start =
             performance.now();
+
+
 
 
 
@@ -114,7 +120,7 @@ function openSpine() {
 
 
             let progress =
-                (time - startTime) / duration;
+                (time - start) / duration;
 
 
 
@@ -126,31 +132,37 @@ function openSpine() {
 
 
 
-            // Background fade
+
+
+            // video fade
 
             backgroundVideo.style.opacity =
                 progress;
 
 
 
-            // Audio fade
+            // audio fade
 
             backgroundVideo.volume =
                 progress;
 
 
 
-            // Spine fade out
+
+            // spine fades away
 
             spine.style.opacity =
                 1 - progress;
 
 
 
-            // Cover fade in
+
+            // cover fades in
 
             frontCover.style.opacity =
                 progress;
+
+
 
 
 
@@ -179,15 +191,14 @@ function openSpine() {
 
 
 
-                enableCoverOpening();
-
+                enableCoverClick();
 
 
             }
 
 
-
         }
+
 
 
 
@@ -203,7 +214,7 @@ function openSpine() {
 
 
         console.log(
-            "Background video could not start:",
+            "Video playback blocked:",
             error
         );
 
@@ -225,12 +236,12 @@ function openSpine() {
 // ==========================================
 
 
-function enableCoverOpening() {
+function enableCoverClick() {
 
 
     frontCover.addEventListener(
         "click",
-        openFrontCover
+        openCover
     );
 
 
@@ -243,11 +254,11 @@ function enableCoverOpening() {
 
 
 // ==========================================
-// FRONT COVER ROTATION
+// FRONT COVER OPENS
 // ==========================================
 
 
-function openFrontCover() {
+function openCover() {
 
 
 
@@ -264,91 +275,15 @@ function openFrontCover() {
 
 
 
-    loadTableOfContents();
-
-
-
-
-    bookInterior.style.visibility =
-        "visible";
-
-
-
-
-    coverContainer.style.transition =
+    frontCoverContainer.style.transition =
         "transform 2.5s ease";
 
 
 
-    coverContainer.style.transform =
-        "rotateY(-170deg)";
 
 
-
-
-
-    setTimeout(() => {
-
-
-
-        coverContainer.style.display =
-            "none";
-
-
-
-    }, 2600);
-
-
-
-}
-
-
-
-
-
-
-
-// ==========================================
-// LOAD TABLE OF CONTENTS
-// ==========================================
-
-
-function loadTableOfContents() {
-
-
-
-    rightPageStack.innerHTML = "";
-
-
-
-    const toc =
-        document.createElement("img");
-
-
-
-    toc.src =
-        "assets/Table-of-Contents.png";
-
-
-
-    toc.alt =
-        "Table of Contents";
-
-
-
-    toc.style.width =
-        "394px";
-
-
-
-    toc.style.height =
-        "633px";
-
-
-
-    rightPageStack.appendChild(
-        toc
-    );
+    frontCoverContainer.style.transform =
+        "rotateY(-180deg)";
 
 
 
