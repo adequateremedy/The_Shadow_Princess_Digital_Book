@@ -1,11 +1,10 @@
-/* Reset margins and padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Ensure the body is strictly black */
+/* Forces the solid black screen and centers the container */
 body {
     display: flex;
     justify-content: center;
@@ -15,44 +14,25 @@ body {
     overflow: hidden;
 }
 
-/* Constrains the flipbook so it holds its shape and doesn't zoom into infinity */
-.book-wrapper {
-    position: relative;
-    width: 100vw;
-    max-width: 1000px; /* Maximum width of the open book */
-    aspect-ratio: 1000 / 750; /* Forces the physical shape of the book */
+.book-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 
-/* The stationary leather backboard that shows through your transparent edges */
-#leather-background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('../assets/Inside-Book-Covers.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0; /* Hidden on load so the black screen shows behind the front cover */
-    transition: opacity 0.3s ease; /* Smooth fade in when you open the book */
-    z-index: 0;
-}
-
-/* The actual flipbook container */
+/* Explicit bounds to stop the zoomed-in stretching issue */
 #flipbook {
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    max-width: 1000px;
+    max-height: 1500px;
 }
 
-/* Keeps the individual page containers completely transparent */
 .page {
     background-color: transparent; 
 }
 
-/* Forces the browser to strictly load your parchment images */
+/* Forces the browser to load the physical image file */
 .page img {
     width: 100%;
     height: 100%;
