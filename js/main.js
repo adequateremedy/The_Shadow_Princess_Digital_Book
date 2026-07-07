@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////
 // THE SHADOW PRINCESS
 // Main Book Engine
-// Stage 1: Background + Spine + Cover Transition
+// Stage 1 - Background + Spine + Cover Transition
 //////////////////////////////////////////////////////////
 
 
@@ -17,12 +17,13 @@ let coverMesh;
 let raycaster;
 let mouse;
 
-let spineVisible = true;
+let spineReady = false;
+let coverReady = false;
 
 
 
 // ------------------------------------------------------
-// INITIALIZE
+// START ENGINE
 // ------------------------------------------------------
 
 function init() {
@@ -32,34 +33,23 @@ function init() {
 
 
 
-    camera = new THREE.PerspectiveCamera(
-        45,
-        window.innerWidth / window.innerHeight,
+    camera = new THREE.OrthographicCamera(
+        window.innerWidth / -200,
+        window.innerWidth / 200,
+        window.innerHeight / 200,
+        window.innerHeight / -200,
         0.1,
         1000
     );
 
 
-    camera.position.set(
-        0,
-        0,
-        5
-    );
-
-
-    camera.lookAt(
-        0,
-        0,
-        0
-    );
+    camera.position.z = 10;
 
 
 
     renderer = new THREE.WebGLRenderer({
-
         alpha: true,
         antialias: true
-
     });
 
 
@@ -71,6 +61,12 @@ function init() {
 
     renderer.setPixelRatio(
         window.devicePixelRatio
+    );
+
+
+    renderer.setClearColor(
+        0x000000,
+        0
     );
 
 
@@ -102,7 +98,7 @@ function init() {
 
     window.addEventListener(
         "click",
-        checkClick
+        handleClick
     );
 
 
@@ -142,13 +138,28 @@ function createBackgroundVideo() {
 
 
 
-    document.body.appendChild(
-        video
+    video.setAttribute(
+        "playsinline",
+        ""
     );
 
 
-    video.play();
 
+    document.body.insertBefore(
+        video,
+        document.body.firstChild
+    );
+
+
+
+    video.play()
+        .catch(() => {
+
+            console.log(
+                "Background video waiting for browser permission."
+            );
+
+        });
 
 
 }
@@ -174,18 +185,24 @@ function loadSpine() {
         function(texture) {
 
 
+
             const material =
                 new THREE.MeshBasicMaterial({
 
                     map: texture,
 
-                    transparent: true,
-
-                    opacity: 1
+                    transparent: true
 
                 });
 
 
+
+            /*
+                Original image ratio:
+                132 x 446
+
+                Scale preserved.
+            */
 
             const geometry =
                 new THREE.PlaneGeometry(
@@ -206,7 +223,7 @@ function loadSpine() {
             spineMesh.position.set(
                 0,
                 0,
-                0
+                1
             );
 
 
@@ -214,6 +231,9 @@ function loadSpine() {
             scene.add(
                 spineMesh
             );
+
+
+            spineReady = true;
 
 
         }
@@ -244,6 +264,7 @@ function loadFrontCover() {
         function(texture) {
 
 
+
             const material =
                 new THREE.MeshBasicMaterial({
 
@@ -259,43 +280,34 @@ function loadFrontCover() {
 
             const geometry =
                 new THREE.PlaneGeometry(
-
                     3.03,
-
                     4.50
-
                 );
 
 
 
             coverMesh =
                 new THREE.Mesh(
-
                     geometry,
-
                     material
-
                 );
 
 
 
             coverMesh.position.set(
-
                 0,
-
                 0,
-
-                0.05
-
+                0.9
             );
 
 
 
             scene.add(
-
                 coverMesh
-
             );
+
+
+            coverReady = true;
 
 
         }
@@ -308,13 +320,16 @@ function loadFrontCover() {
 
 
 // ------------------------------------------------------
-// CLICK DETECTION
+// CLICK SPINE
 // ------------------------------------------------------
 
-function checkClick(event) {
+function handleClick(event) {
 
 
-    if (!spineVisible || !spineMesh) {
+    if (
+        !spineReady ||
+        !coverReady
+    ) {
 
         return;
 
@@ -323,11 +338,14 @@ function checkClick(event) {
 
 
     mouse.x =
-        (event.clientX / window.innerWidth) * 2 - 1;
+        (event.clientX /
+        window.innerWidth) * 2 - 1;
+
 
 
     mouse.y =
-        -(event.clientY / window.innerHeight) * 2 + 1;
+        -(event.clientY /
+        window.innerHeight) * 2 + 1;
 
 
 
@@ -338,18 +356,16 @@ function checkClick(event) {
 
 
 
-    const intersects =
+    const hit =
         raycaster.intersectObject(
             spineMesh
         );
 
 
 
-    if (intersects.length > 0) {
-
+    if (hit.length > 0) {
 
         openCover();
-
 
     }
 
@@ -359,20 +375,16 @@ function checkClick(event) {
 
 
 // ------------------------------------------------------
-// SPINE TO COVER CROSSFADE
+// SPINE TO COVER FADE
 // ------------------------------------------------------
 
 function openCover() {
 
 
-    spineVisible = false;
-
-
-
     const duration = 1200;
 
-
-    const start = performance.now();
+    const start =
+        performance.now();
 
 
 
@@ -399,19 +411,14 @@ function openCover() {
 
         if (progress < 1) {
 
-
             requestAnimationFrame(
                 fade
             );
 
-
         }
         else {
 
-
-            spineMesh.visible =
-                false;
-
+            spineMesh.visible = false;
 
         }
 
@@ -430,15 +437,27 @@ function openCover() {
 
 
 // ------------------------------------------------------
-// RESIZE
+// WINDOW RESIZE
 // ------------------------------------------------------
 
 function resize() {
 
 
-    camera.aspect =
-        window.innerWidth /
-        window.innerHeight;
+    camera.left =
+        window.innerWidth / -200;
+
+
+    camera.right =
+        window.innerWidth / 200;
+
+
+    camera.top =
+        window.innerHeight / 200;
+
+
+    camera.bottom =
+        window.innerHeight / -200;
+
 
 
     camera.updateProjectionMatrix();
@@ -446,11 +465,8 @@ function resize() {
 
 
     renderer.setSize(
-
         window.innerWidth,
-
         window.innerHeight
-
     );
 
 
@@ -459,7 +475,7 @@ function resize() {
 
 
 // ------------------------------------------------------
-// LOOP
+// RENDER LOOP
 // ------------------------------------------------------
 
 function animate() {
@@ -480,6 +496,6 @@ function animate() {
 
 
 
-// START
+// RUN
 
 init();
