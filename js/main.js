@@ -6,58 +6,44 @@ document.addEventListener('DOMContentLoaded', function() {
         "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen"
     ];
 
-    // 1. Page 1 (Right): Front Cover
-    const frontCover = document.createElement('div');
-    frontCover.className = 'page';
-    frontCover.style.backgroundImage = "url('assets/front-cover.png')";
-    flipbookContainer.appendChild(frontCover);
+    // Helper function to build actual <img> tags for the pages
+    function createPage(imagePath) {
+        const page = document.createElement('div');
+        page.className = 'page';
+        const img = document.createElement('img');
+        img.src = imagePath;
+        page.appendChild(img);
+        flipbookContainer.appendChild(page);
+    }
 
-    // 2. Page 2 (Left): Backside of Front Cover
-    const insideFrontCover = document.createElement('div');
-    insideFrontCover.className = 'page';
-    insideFrontCover.style.backgroundImage = "url('assets/Backside-of-front-cover.png')";
-    flipbookContainer.appendChild(insideFrontCover);
+    // 1. Page 0 (Right): Front Cover
+    createPage('assets/front-cover.png');
+    
+    // 2. Page 1 (Left): Backside of Front Cover
+    createPage('assets/Backside-of-front-cover.png');
+    
+    // 3. Page 2 (Right): Table of Contents
+    createPage('assets/Table-of-Contents.png');
+    
+    // 4. Page 3 (Left): Blank Left Side (Back of TOC)
+    createPage('assets/Blank-Left-Side.png');
 
-    // 3. Page 3 (Right): Table of Contents
-    const tocPage = document.createElement('div');
-    tocPage.className = 'page';
-    tocPage.style.backgroundImage = "url('assets/Table-of-Contents.png')";
-    flipbookContainer.appendChild(tocPage);
-
-    // 4. Page 4 (Left): Blank Left Side (Back of TOC)
-    const blankTOCBack = document.createElement('div');
-    blankTOCBack.className = 'page';
-    blankTOCBack.style.backgroundImage = "url('assets/Blank-Left-Side.png')";
-    flipbookContainer.appendChild(blankTOCBack);
-
-    // Pages 5 through 264: Chapter Pages
+    // Pages 4 through 263: Chapter Pages
     chapterWords.forEach(word => {
         const folderName = `Chapter_${word}`;
         for (let i = 1; i <= 20; i++) {
-            const page = document.createElement('div');
-            page.className = 'page';
-            page.style.backgroundImage = `url('chapters/${folderName}/Chapter-${word}-Page-${i}.png')`;
-            flipbookContainer.appendChild(page);
+            createPage(`chapters/${folderName}/Chapter-${word}-Page-${i}.png`);
         }
     });
 
-    // Page 265 (Right): Blank Right Side (Opposite Ch 13, Pg 20)
-    const blankAfterStory = document.createElement('div');
-    blankAfterStory.className = 'page';
-    blankAfterStory.style.backgroundImage = "url('assets/Blank-Right-Side.png')";
-    flipbookContainer.appendChild(blankAfterStory);
-
-    // Page 266 (Left): Backside of Back Cover
-    const insideBackCover = document.createElement('div');
-    insideBackCover.className = 'page';
-    insideBackCover.style.backgroundImage = "url('assets/Backside-of-back-cover.png')";
-    flipbookContainer.appendChild(insideBackCover);
-
-    // Page 267 (Right): Blank Right Side (To allow book to fully close)
-    const finalBlankPage = document.createElement('div');
-    finalBlankPage.className = 'page';
-    finalBlankPage.style.backgroundImage = "url('assets/Blank-Right-Side.png')";
-    flipbookContainer.appendChild(finalBlankPage);
+    // Page 264 (Right): Blank Right Side (Opposite Ch 13, Pg 20)
+    createPage('assets/Blank-Right-Side.png');
+    
+    // Page 265 (Left): Backside of Back Cover
+    createPage('assets/Backside-of-back-cover.png');
+    
+    // Page 266 (Right): Blank Right Side (Closes the book)
+    createPage('assets/Blank-Right-Side.png');
 
     // Initialize PageFlip
     const pageFlip = new St.PageFlip(flipbookContainer, {
@@ -75,4 +61,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load all generated pages into the flipbook
     pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+    // Toggle the stationary leather background based on whether the book is open or closed
+    const leatherBg = document.getElementById('leather-background');
+    pageFlip.on('flip', (e) => {
+        // e.data is the page index. 0 is the front cover, 266 is the back cover.
+        if (e.data === 0 || e.data === 266) {
+            leatherBg.style.opacity = '0'; // Hide the inside covers when the book is completely closed
+        } else {
+            leatherBg.style.opacity = '1'; // Show the inside covers when the book is open
+        }
+    });
 });
