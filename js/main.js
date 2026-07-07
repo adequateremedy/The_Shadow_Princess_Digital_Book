@@ -26,11 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 4. Chapter Pages (13 chapters, 20 pages each)
     chapterWords.forEach(word => {
-        const folderName = `chapter ${word.toLowerCase()}`;
+        // Matches the new folder format: Chapter_One
+        const folderName = `Chapter_${word}`;
         for (let i = 1; i <= 20; i++) {
             const page = document.createElement('div');
             page.className = 'page';
-            page.style.backgroundImage = `url('chapters/${folderName}/Chapter ${word} - Page ${i}.png')`;
+            // Matches the new file format: Chapter-One-Page-1.png
+            page.style.backgroundImage = `url('chapters/${folderName}/Chapter-${word}-Page-${i}.png')`;
             flipbookContainer.appendChild(page);
         }
     });
