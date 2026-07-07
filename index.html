@@ -5,94 +5,131 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>The Shadow Princess</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+          href="css/style.css">
 
 </head>
 
-
 <body>
 
+    <!-- =====================================================
+         BACKGROUND ATMOSPHERE
+    ====================================================== -->
 
-    <!--
-        Background Atmosphere Video
+    <video id="background-video"
+           playsinline
+           preload="auto"
+           loop>
 
-        Hidden until the spine is clicked.
-        JavaScript will start the video,
-        audio, and fade-in sequence.
-    -->
-
-    <video
-        id="background-video"
-        loop
-        playsinline>
-
-        <source
-            src="assets/background.webm"
-            type="video/webm">
+        <source src="assets/background.webm"
+                type="video/webm">
 
     </video>
 
 
 
-    <!--
-        Main Book Container
-    -->
+    <!-- =====================================================
+         BOOK
+    ====================================================== -->
 
     <div id="book">
 
 
-        <!-- Closed Book Spine -->
+        <!-- ==============================================
+             CLOSED BOOK (SPINE)
+        =============================================== -->
 
         <img
             id="spine"
             src="assets/spine.png"
-            alt="The Shadow Princess Spine">
+            alt="Book Spine">
 
 
 
-        <!-- Front Cover -->
+        <!-- ==============================================
+             HARD COVER
+        =============================================== -->
 
-        <img
-            id="front-cover"
-            src="assets/front-cover.png"
-            alt="The Shadow Princess Front Cover">
+        <div id="cover-container">
+
+            <img
+                id="front-cover"
+                src="assets/front-cover.png"
+                alt="Front Cover">
+
+        </div>
 
 
 
-        <!-- Open Book Structure -->
+        <!-- ==============================================
+             OPEN BOOK
+        =============================================== -->
 
-        <div id="open-book">
+        <div id="book-interior">
 
 
-            <!-- Inside Front Cover -->
 
-            <div id="inside-front-cover">
+            <!-- ==========================================
+                 LEFT SIDE
+            =========================================== -->
+
+            <div id="left-side">
+
+                <!-- Inside Front Cover -->
+
+                <div id="inside-front-cover"></div>
+
+                <!-- Read Pages -->
+
+                <div id="left-page-stack"></div>
+
             </div>
 
 
 
-            <!-- Left Page Stack -->
 
-            <div id="left-pages">
+
+            <!-- ==========================================
+                 BOOK GUTTER
+            =========================================== -->
+
+            <div id="book-spine-shadow"></div>
+
+
+
+
+
+            <!-- ==========================================
+                 RIGHT SIDE
+            =========================================== -->
+
+            <div id="right-side">
+
+                <!-- Inside Back Cover -->
+
+                <div id="inside-back-cover"></div>
+
+                <!-- Remaining Pages -->
+
+                <div id="right-page-stack"></div>
+
             </div>
 
 
 
-            <!-- Right Page Stack -->
-
-            <div id="right-pages">
-            </div>
 
 
+            <!-- ==========================================
+                 ACTIVE PAGE TURN LAYER
+            =========================================== -->
 
-            <!-- Inside Back Cover -->
+            <div id="page-turn-layer"></div>
 
-            <div id="inside-back-cover">
-            </div>
 
 
         </div>
@@ -104,7 +141,6 @@
 
 
     <script src="js/main.js"></script>
-
 
 </body>
 
