@@ -1,12 +1,5 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #000000;
-}
+body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #000000; }
 
 .book-viewport { position: relative; width: 900px; height: 675px; }
 
@@ -18,6 +11,5 @@ body {
 .side-right { flex: 1; background: url('../assets/Backside-of-back-cover.png') no-repeat center/contain; }
 
 #flipbook { position: relative; z-index: 1; width: 100%; height: 100%; }
-
 .page { background-color: transparent !important; overflow: visible !important; }
 .page img { display: block; width: 100%; height: 100%; object-fit: contain; }
