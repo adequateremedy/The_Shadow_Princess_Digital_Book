@@ -5,23 +5,17 @@ body {
     min-height: 100vh; background-color: #000000; 
 }
 
-/* This container must be exactly the width of the book (900px) */
-.book-container { 
-    width: 900px; height: 675px; 
-}
+.book-container { width: 900px; height: 675px; }
 
-#flipbook { 
-    width: 900px; height: 675px; 
-}
+#flipbook { width: 900px; height: 675px; }
 
-/* This is the fix for the spine gap */
 .page { 
     background-color: transparent !important; 
     overflow: visible !important; 
     width: 450px !important; 
     height: 675px !important;
-    /* Negative margin forces the left and right pages to meet at the center */
-    margin: 0 -0.5px !important; 
+    /* Negative margin pulls the pages together at the spine */
+    margin: 0 -2px !important; 
 }
 
 .page img { 
