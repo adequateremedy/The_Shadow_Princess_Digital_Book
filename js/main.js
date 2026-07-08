@@ -12,12 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         flipbookContainer.appendChild(page);
     }
 
-    // --- FULL HINGED SEQUENCE ---
     createPage('assets/front-cover.png', true);
     createPage('assets/Backside-of-front-cover.png', true);
-    
-    createPage('assets/Blank-Left-Side.png', false);
     createPage('assets/Table-of-Contents.png', false);
+    createPage('assets/Blank-Left-Side.png', false);
 
     chapterWords.forEach((word) => {
         for (let i = 1; i <= 20; i++) {
