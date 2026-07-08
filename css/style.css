@@ -14,8 +14,8 @@ body {
     overflow: visible !important; 
     width: 450px !important; 
     height: 675px !important;
-    /* Negative margin pulls the pages together at the spine */
-    margin: 0 -2px !important; 
+    /* Increased negative margin to -4px to ensure the sides touch seamlessly */
+    margin: 0 -4px !important; 
 }
 
 .page img { 
